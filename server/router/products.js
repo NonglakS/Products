@@ -6,9 +6,9 @@ router
   .route('/')
   .get((req, res) => {
     var count = req.query.count || 5; //default
+    var page = req.query.page || 1; //default
     res.send(`server is sending back ${count} products`);
-
-    //might not need to do this, leave it for later
+    //don't use in product module.   --leave it for later
   });
 
 
@@ -17,7 +17,7 @@ router
   .get((req, res) => {
     db.getProductById(req.params.id)
       .then((data) => {
-        console.log(data)
+        // console.log(data)
         res.send(data)
       })
       .catch((err) => {

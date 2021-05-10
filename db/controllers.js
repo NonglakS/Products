@@ -20,11 +20,11 @@ module.exports = {
 
   getStyles: function (id) {
     return pool.query(`
-   SELECT
+    SELECT
       s.*,
       JSON_AGG(json_build_object('thumbnail_url', p.thumbnail_url, 'url', p.url)) AS photos,
       (
-        SELECT JSON_AGG(json_build_object(id, (json_build_object('quantity', quantity, 'size', size))))
+        SELECT json_object_agg(id, (json_build_object('quantity', quantity, 'size', size)))
         AS skus
         FROM inventory  where s.style_id=inventory.styleid
      )
@@ -32,8 +32,9 @@ module.exports = {
       LEFT JOIN photos p ON (s.style_id=p.styleid)
       WHERE s.product_id=${id}
       GROUP BY s.style_id;
+
 `)
-      .then((res) => { return res.rows[0] })
+      .then((res) => { return res.rows })
       .catch(err => console.log('error executing query', err.stack))
   },
 
