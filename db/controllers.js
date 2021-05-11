@@ -4,6 +4,18 @@ require('dotenv').config();
 const pool = new Pool();
 module.exports = {
 
+  getProducts: function(count, page){
+    var p = page-1;
+    return pool.query(`
+      SELECT * FROM products
+        ORDER BY id
+        LIMIT ${count} OFFSET ${p*count}`)
+    .then(res => {
+      return res.rows
+    })
+    .catch(err => console.log('error executing query', err.stack))
+  },
+
   getProductById: function (id) {
     return pool.query(`SELECT p.id, p.name, p.slogan, p.description, p.category, p.default_price, JSON_AGG (json_build_object('feature', f.feature, 'value', f.value)) AS features FROM products AS p LEFT JOIN features AS f ON p.id = f.productid WHERE p.id=${id} GROUP BY p.id, p.name;`)
       .then(res => {
