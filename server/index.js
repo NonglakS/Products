@@ -3,9 +3,9 @@ require('dotenv').config();
 const express = require("express");
 var app = express();
 
-const products = require('./router/products.js');
+const products = require('./controllers/products.js');
 app.use(express.json());
-const cart = require('./router/cart.js');
+const cart = require('./controllers/cart.js');
 app.use("/products", products);
 app.use("/cart", cart);
 
