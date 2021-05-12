@@ -2,3 +2,4 @@
 node_modules/
 newrelic.js
 script.js
+newrelic_agent.log

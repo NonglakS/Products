@@ -42,7 +42,7 @@ router
     })
   }),
 
-router
+router.
   .route('/:id/related')
   .get((req, res) => {
     db.getRelated(req.params.id)
