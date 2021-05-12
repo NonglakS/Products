@@ -11,23 +11,25 @@ module.exports = {
         ORDER BY id
         LIMIT ${count} OFFSET ${p*count}`)
     .then(res => {
-      return res.rows
+      return res.rows;
     })
-    .catch(err => console.log('error executing query', err.stack))
+    .catch(err => console.log('error executing query', err.stack));
   },
 
   getProductById: function (id) {
     return pool.query(`SELECT p.id, p.name, p.slogan, p.description, p.category, p.default_price, JSON_AGG (json_build_object('feature', f.feature, 'value', f.value)) AS features FROM products AS p LEFT JOIN features AS f ON p.id = f.productid WHERE p.id=${id} GROUP BY p.id, p.name;`)
       .then(res => {
-        return res.rows[0]
+        return res.rows[0];
       })
-      .catch(err => console.log('error executing query', err.stack))
+      .catch(err => console.log('error executing query', err.stack));
   },
 
   getRelated: function (id) {
-    return pool.query(`SELECT ARRAY_AGG(related_product_id) FROM related_products WHERE current_product_id = ${id};`)
+    return pool.query(`SELECT ARRAY_AGG(related_product_id)
+       FROM related_products
+       WHERE current_product_id = ${id};`)
       .then((res) => { return res.rows[0].array_agg })
-      .catch(err => console.log('error executing query', err.stack))
+      .catch(err => console.log('error executing query', err.stack));
   },
 
   getStyles: function (id) {
@@ -47,8 +49,7 @@ module.exports = {
 
 `)
       .then((res) => { return res.rows })
-      .catch(err => console.log('error executing query', err.stack))
+      .catch(err => console.log('error executing query', err.stack));
   },
-
 
 }

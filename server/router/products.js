@@ -22,12 +22,11 @@ router
   .get((req, res) => {
     db.getProductById(req.params.id)
       .then((data) => {
-        // console.log(data)
-        res.send(data)
+        res.send(data);
       })
       .catch((err) => {
         res.status(400).send(err);
-      })
+      });
   });
 
 router
@@ -35,19 +34,19 @@ router
   .get((req, res) => {
     db.getStyles(req.params.id)
     .then (data => {
-      res.send(data)
+      res.send(data);
     })
     .catch((err) => {
       res.status(400).send(err);
-    })
+    });
   }),
 
-router.
+router
   .route('/:id/related')
   .get((req, res) => {
     db.getRelated(req.params.id)
     .then (data => {
-      res.send(data)
+      res.send(data);
     })
     .catch((err) => {
       res.status(400).send(err);
